@@ -26,16 +26,8 @@ body {
 
 /* Portrait layout (default) */
 .app {
-background-color: rgb(243, 242, 240)
+background-color: rgba(243, 242, 240, 0)
 }
-
-table#t01 tr:nth-child(even) {
-    background-color: rgb(77, 105, 180);
-}
-table#t01 tr:nth-child(odd) {
-    background-color: rgb(20, 39, 92);
-}
-
 
 h1 {
     font-size:24px;
@@ -61,9 +53,27 @@ h1 {
 }
 
 .event.received {
-    background-color:#4B946A;
+    background-color:rgb(223, 83, 83);
     display:none;
 }
+button {
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    font-family: Georgia;
+    color: #edf2fa;
+    font-size: 12px;
+    background: #007acc;
+    padding: 7px 12px 7px 12px;
+    text-decoration: none;
+    border: solid #1f628d 0px;
+    text-decoration: none;
+  }
+  
+button:hover {
+    background: #163b52;
+    text-decoration: none;
+  }
 
 @keyframes fade {
     from { opacity: 1.0; }

@@ -14,6 +14,8 @@ var app = {
             ("click", findContacts);
         document.getElementById("deleteContact").addEventListener
             ("click", deleteContact);
+        document.getElementById("devInfo").addEventListener
+            ("click", devInfo);
     },
 
     // Update DOM on a Received Event
@@ -89,7 +91,7 @@ function deleteContact() {
         function onSuccess() {
             alert("Removal Success");
         };
-        
+
         function onError(contactError) {
             alert("Error = " + contactError.code);
         };
@@ -98,4 +100,7 @@ function deleteContact() {
     function contactfindError(message) {
         alert('Failed because: ' + message);
     }
+}
+function devInfo(){
+    alert(device.platform+"\n"+device.manufacturer+"\n"+device.model);
 }
