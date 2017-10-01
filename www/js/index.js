@@ -16,6 +16,22 @@ var app = {
             ("click", deleteContact);
         document.getElementById("devInfo").addEventListener
             ("click", devInfo);
+        document.getElementById("getAcc").addEventListener
+            ("click", getAcceleration);
+        document.getElementById("watchAcc").addEventListener
+            ("click", watchAcc);
+        document.getElementById("beep").addEventListener
+            ("click", beep);
+        document.getElementById("devO").addEventListener
+            ("click", devOrient);
+        document.getElementById("gcurr").addEventListener
+            ("click", getCurr);
+        document.getElementById("chkConn").addEventListener
+            ("click", checkConnection);
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            navigator.vibrate(2000);
+        }
     },
 
     // Update DOM on a Received Event
@@ -101,6 +117,80 @@ function deleteContact() {
         alert('Failed because: ' + message);
     }
 }
-function devInfo(){
-    alert(device.platform+"\n"+device.manufacturer+"\n"+device.model);
+function devInfo() {
+    alert(device.platform + "\n" + device.manufacturer + "\n" + device.model);
+}
+function getAcceleration() {
+    function onSuccess(acceleration) {
+        alert('Acceleration X: ' + acceleration.x + '\n' +
+            'Acceleration Y: ' + acceleration.y + '\n' +
+            'Acceleration Z: ' + acceleration.z + '\n' +
+            'Timestamp: ' + acceleration.timestamp + '\n');
+    }
+
+    function onError() {
+        alert('onError!');
+    }
+
+    navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
+}
+function watchAcc() {
+    function onSuccess(acceleration) {
+        console.log('Acceleration X: ' + acceleration.x + '\n' +
+            'Acceleration Y: ' + acceleration.y + '\n' +
+            'Acceleration Z: ' + acceleration.z + '\n' +
+            'Timestamp: ' + acceleration.timestamp + '\n');
+    }
+
+    function onError() {
+        alert('onError!');
+    }
+
+    var options = { frequency: 3000 };  // Update every 3 seconds
+
+    var watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+}
+function beep() {
+    navigator.notification.beep(2);
+}
+
+function devOrient() {
+    function onSuccess(heading) {
+        alert('Heading: ' + heading.magneticHeading);
+    };
+
+    function onError(error) {
+        alert('CompassError: ' + error.code);
+    };
+
+    navigator.compass.getCurrentHeading(onSuccess, onError);
+}
+function getCurr() {
+    navigator.globalization.getCurrencyPattern(
+        'USD',
+        function (pattern) {
+            alert('pattern: ' + pattern.pattern + '\n' +
+                'code: ' + pattern.code + '\n' +
+                'fraction: ' + pattern.fraction + '\n' +
+                'rounding: ' + pattern.rounding + '\n' +
+                'decimal: ' + pattern.decimal + '\n' +
+                'grouping: ' + pattern.grouping);
+        },
+        function () { alert('Error getting pattern\n'); }
+    );
+}
+function checkConnection() {
+    var networkState = navigator.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN] = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI] = 'WiFi connection';
+    states[Connection.CELL_2G] = 'Cell 2G connection';
+    states[Connection.CELL_3G] = 'Cell 3G connection';
+    states[Connection.CELL_4G] = 'Cell 4G connection';
+    states[Connection.CELL] = 'Cell generic connection';
+    states[Connection.NONE] = 'No network connection';
+
+    alert('Connection type: ' + states[networkState]);
 }
