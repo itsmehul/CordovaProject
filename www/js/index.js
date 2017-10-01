@@ -32,6 +32,9 @@ var app = {
         function onDeviceReady() {
             navigator.vibrate(2000);
         }
+        document.getElementById("playAudio").addEventListener("click", playAudio);
+        document.getElementById("pauseAudio").addEventListener("click", pauseAudio);
+        document.getElementById("stopAudio").addEventListener("click", stopAudio);
     },
 
     // Update DOM on a Received Event
@@ -194,3 +197,33 @@ function checkConnection() {
 
     alert('Connection type: ' + states[networkState]);
 }
+
+var myMedia = null;
+function playAudio() {
+   var src = "/android_asset/www/assets/morty.mp3";
+
+   if(myMedia === null) {
+      myMedia = new Media(src, onSuccess, onError);
+
+      function onSuccess() {
+         console.log("playAudio Success");
+      }
+
+      function onError(error) {
+         console.log("playAudio Error: " + error.code);
+      }
+   }
+   myMedia.play();
+}
+function pauseAudio() {
+    if(myMedia) {
+       myMedia.pause();
+    }
+ }
+ 
+ function stopAudio() {
+    if(myMedia) {
+       myMedia.stop(); 
+    }
+    myMedia = null;
+ }
